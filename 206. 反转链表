@@ -37,4 +37,16 @@ public:
         }
         return head;
     }
+    
+    //还有一种递归解法，可以理解为暂时将head视为最终的节点，后面的节点都已反转好，只剩head一个，再处理这一个就行了
+    ListNode* reverse_list(ListNode* head)
+    {
+    	if (head == nullptr || head->next == nullptr)  //特殊情况和入栈终点
+			return head;
+		ListNode* tmp = reverse_list(head->next);      //假设head后面的节点已经反转好了
+		head->next->next = head;                       //将head后面的节点指向head，即开始反转,同时这里改变上一层的nullptr的操作
+		head->next = nullptr;                          //这里暂时将head->next设为nullptr,为的是当递归将要结束时，可以判断递归终点
+		return tmp;                                    //返回结果
+    }
+   	
 };
